@@ -1,4 +1,4 @@
-import { Group } from 'three';
+import { Group, WireframeGeometry, LineBasicMaterial, LineSegments } from 'three';
 import ModelLoader from '/js/ModelLoader.js';
 
 class Piece extends Group {
@@ -22,6 +22,12 @@ class Piece extends Group {
         this.scale.setScalar(0.2);
         this.traverse((object) => {
             if(object.type === "Mesh") {
+                const geometry = object.geometry;
+                const wireframeGeometry = new WireframeGeometry(geometry);
+                const wireframeMaterial = new LineBasicMaterial({ color: 0x000000, linewidth: 1 });
+                const wireframeMesh = new LineSegments(wireframeGeometry, wireframeMaterial);
+                object.add(wireframeMesh);
+
                 object.castShadow = true;
                 object.material = object.material.clone();
                 object.material.color.set(this.color === 'white' ? 0XF5F5F5 : 0X2B2B2B);

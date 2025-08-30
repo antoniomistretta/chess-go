@@ -4,8 +4,13 @@ import {
 	DirectionalLight,
 	Scene as ThreeScene,
 	OrthographicCamera,
-	WebGLRenderer as Renderer
+	WebGLRenderer as Renderer,
+	Vector2
 } from 'three';
+
+// import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+// import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+// import { OutlinePass } from 'three/addons/postprocessing/OutlinePass.js';
 
 class Scene {
 	constructor() {
@@ -17,7 +22,7 @@ class Scene {
 		this.renderer.shadowMap.enabled = true;
 
 		this.camera = new OrthographicCamera(
-			this.getCamera('left'), 
+			this.getCamera('left'),
 			this.getCamera('right'),
 			this.getCamera('top'),
 			this.getCamera('bottom'),
@@ -31,12 +36,30 @@ class Scene {
 		this.camera.position.set(-1, 2.5, 0);
 		this.camera.lookAt(0, 0, 0);
 
+		// this.composer = new EffectComposer(this.renderer);
+		// this.composer.addPass(new RenderPass(this.scene, this.camera));
+
+		// this.outlinePass = new OutlinePass(
+		// 	new Vector2(window.innerWidth, window.innerHeight),
+		// 	this.scene,
+		// 	this.camera
+		// );
+
+		// console.log(this.outlinePass);
+
+		// this.outlinePass.edgeStrength = 3;
+		// this.outlinePass.edgeGlow = 0;
+		// this.outlinePass.visibleEdgeColor.set(0xff0000); // Red outline
+
+		// this.composer.addPass(this.outlinePass);
+
 		this.renderer.setAnimationLoop(() => {
 			this.renderer.render(this.scene, this.camera);
+			// this.composer.render();
 		});
 
 		const light = new AmbientLight(0x404040);
-		light.intensity = 20;
+		light.intensity = 25;
 		this.scene.add(light);
 
 		const directionalLight = new DirectionalLight(0XFFFFFF, 0.5);
@@ -58,6 +81,10 @@ class Scene {
 			this.renderer.render(this.scene, this.camera);
 		});
 	}
+
+	// addEffect(object) {
+	// 	this.outlinePass.selectedObjects = [object];
+	// }
 
 	add(object) {
 		this.scene.add(object);

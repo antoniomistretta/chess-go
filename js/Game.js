@@ -15,22 +15,38 @@ const levels = {
 			['-','-','-','-','-','-','-','-'],
 			['p','p','p','p','p','p','p','p'],
 			['r','n','b','q','k','b','n','r']
-		]
+		],
+        switchTurn: (turn) => {
+			return turn === 'white' ? 'black' : 'white';
+		}
 	},
 	'test': {
 		board: [
-            ['Q','-'],
-			['-','-'],
+            ['K','X'],
+			['-','X'],
+            ['-','X'],
 			['-','-'],
 			['-','r']
 		],
-		onTurnComplete: () => {
-			const conditionsMet = true;
-			return { conditionsMet }
+        totalMoves: 1,
+		getLevelStatus: (game) => {
+            const king = game.level.pieces.getObjectByName('black king');
+            const validMoves = game.level.getValidMoves(king);
+
+            if(validMoves.length === 0) {
+                return 'complete';
+            }
+
+            game.level.movePiece(king, validMoves[Math.floor(Math.random() * validMoves.length)], 0.25);
+
+            if(game.moveCount >= game.level.totalMoves) {
+                return 'failed';
+            }
 		},
-		switchTurn: (turn) => {
-			return turn === 'white' ? 'black' : 'white';
-		}
+        switchTurn: (turn) => {
+            turn = turn === 'white' ? 'black' : 'white';
+            return turn === 'white' ? 'black' : 'white';;
+        }
 	}
 };
 
@@ -106,6 +122,7 @@ class Game {
                 document.body.style.cursor = 'grabbing';
 
                 this.selectedPiece = piece;
+                // this.scene.addEffect(this.selectedPiece);
                 this.grabbingPiece = true;
 
                 this.validMoves = this.level.getValidMoves(piece);
@@ -122,57 +139,28 @@ class Game {
             const selectedTile = intersects[0].object;
 
             if(this.selectedPiece !== null) {
+                const animateMove = !this.grabbingPiece;
                 document.body.style.cursor = 'default';
                 this.grabbingPiece = false;
 
                 if(this.validMoves.includes(selectedTile.name)) {
-                    const { rank, file } = selectedTile.userData;
-                    const target = this.level.getPieceAt(rank, file);
-
-                    if(target !== undefined) {
-                        this.level.pieces.remove(target);
-                    }
-
-                    const { rank: selectedRank, file: selectedFile } = this.level.getRankAndFileOf(this.selectedPiece);
-
-                    this.level.board[selectedRank][selectedFile] = '-';
-                    this.level.board[rank][file] = this.selectedPiece;
-                    this.selectedPiece.hasMoved = true;
-                    this.selectedPiece.tile = selectedTile.name;
-                    this.selectedPiece.position.set(rank, 0, file);
+                    this.moveCount += 1;
+                    this.level.movePiece(this.selectedPiece, selectedTile.name, animateMove ? 0.25 : 0, () => {
+                        switch(this.level.getLevelStatus(this)) {
+                            case 'complete':
+                                this.removeEventListeners();
+                                break;
+                            case 'failed':
+                                this.removeEventListeners();
+                                break;
+                            default:
+                                console.log('still going!');
+                        }
+                    });
 
                     for(const validMove of this.validMoves) {
                         const tile = this.level.tiles.getObjectByName(validMove);
                         tile.unhighlight();
-                    }
-
-                    const { conditionsMet } = this.level.onTurnComplete();
-                    if(!conditionsMet) {
-                        const turn = this.level.switchTurn(this.turn);
-
-                        if(turn !== this.turn) {
-                            this.turn = turn;
-
-                            this.scene.camera.position.set(
-                                -this.scene.camera.position.x,
-                                this.scene.camera.position.y,
-                                -this.scene.camera.position.z
-                            );
-
-                            this.scene.camera.lookAt(0, 0, 0);
-                        }
-
-                        this.selectedPiece = null;
-                        this.validMoves = [];
-                    } else {
-                        this.removeEventListeners();
-
-                        setTimeout(() => {
-                            this.unloadLevel();
-                            this.level = new Level(levels['classic']);
-                            this.loadLevel();
-                            this.startGame();
-                        }, 1000);
                     }
                 } else {
                     const { rank, file } = this.level.getRankAndFileOf(this.selectedPiece);

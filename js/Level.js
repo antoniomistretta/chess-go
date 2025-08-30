@@ -8,8 +8,8 @@ class Level {
 		this.board = level.board.reverse();
 		this.length = this.board.length;
 		this.width = this.board[0].length;
-		this.onTurnComplete = level.onTurnComplete;
-		this.switchTurn = level.switchTurn;
+		this.getLevelStatus = level.getLevelStatus;
+		this.totalMoves = level.totalMoves;
 
 		this.tiles = new Group();
 		this.pieces = new Group();
@@ -57,8 +57,12 @@ class Level {
 	}
 
 	getRankAndFileOf(piece) {
-		const rank = piece.tile.split('')[1] - 1;
-		const file = piece.tile.split('')[0].charCodeAt(0) - 97;
+		return this.getRankAndFileOfNotation(piece.tile);
+	}
+
+	getRankAndFileOfNotation(notation) {
+		const rank = notation.split('')[1] - 1;
+		const file = notation.split('')[0].charCodeAt(0) - 97;
 
 		return { rank, file };
 	}
@@ -204,6 +208,29 @@ class Level {
 		}
 
 		return validMoves;
+	}
+
+	movePiece(piece, moveNotation, duration, callback) {
+		const { rank: sourceRank, file: sourceFile} = this.getRankAndFileOf(piece);
+		const { rank: targetRank, file: targetFile} = this.getRankAndFileOfNotation(moveNotation);
+
+		const target = this.getPieceAt(targetRank, targetFile);
+
+		if(target !== undefined) {
+			this.pieces.remove(target);
+		}
+
+		this.board[sourceRank][sourceFile] = '-';
+		this.board[targetRank][targetFile] = piece;
+		piece.hasMoved = true;
+		piece.tile = moveNotation;
+
+		gsap.to(piece.position, {
+			duration: duration,
+			x: targetRank,
+			z: targetFile,
+			onComplete: callback
+		});
 	}
 
 	isTileUnderAttack(rank, file, color) {

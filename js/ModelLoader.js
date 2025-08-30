@@ -7,10 +7,6 @@ class ModelLoader {
     constructor() {
         this.loadingManager = new LoadingManager();
         this.loader = new GLTFLoader(this.loadingManager);
-
-        this.loadingManager.onProgress = function(url, itemsLoaded, itemsTotal) {
-            console.log('Loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.');
-        };
     }
 
     loadModels(models, onComplete) {
