@@ -14,6 +14,14 @@ class Tile extends Mesh {
 
         this.receiveShadow = true;
     }
+
+    highlight() {
+        this.material.emissiveIntensity = 0.5;
+    }
+
+    unhighlight() {
+        this.material.emissiveIntensity = 0;
+    }
 }
 
 export default Tile;

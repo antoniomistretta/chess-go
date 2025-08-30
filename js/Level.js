@@ -3,46 +3,57 @@ import { Group } from 'three';
 import Tile from '/js/Tile.js';
 import Piece from '/js/Piece.js';
 
-const conditions = {
-	'checkmate': () => {
-		console.log('checking for checkmate');
-	}
-};
-
-const levels = {
-	'classic': {
-		board: [
-			['R','N','B','Q','K','B','N','R'],
-			['P','P','P','P','P','P','P','P'],
-			['-','-','-','-','-','-','-','-'],
-			['-','-','-','-','-','-','-','-'],
-			['-','-','-','-','-','-','-','-'],
-			['-','-','-','-','-','-','-','-'],
-			['p','p','p','p','p','p','p','p'],
-			['r','n','b','q','k','b','n','r']
-		]
-	},
-	'test': {
-		board: [
-			['-','-','-','-','-','-','-','-'],
-			['-','-','-','-','-','-','-','-'],
-			['-','-','-','-','-','-','-','B'],
-			['B','-','-','-','-','-','-','-'],
-			['-','-','-','r','-','b','N','-'],
-			['-','P','-','-','-','-','-','-'],
-			['-','-','-','k','-','-','-','-'],
-			['-','-','-','-','-','-','-','-']
-		]
-	}
-};
-
 class Level {
-	constructor(name) {
-		this.board = levels[name].board.reverse();
+	constructor(level) {
+		this.board = level.board.reverse();
 		this.length = this.board.length;
 		this.width = this.board[0].length;
+		this.onTurnComplete = level.onTurnComplete;
+		this.switchTurn = level.switchTurn;
 
-		this.loadBoard();
+		this.tiles = new Group();
+		this.pieces = new Group();
+		this.addTilesAndPieces();
+	}
+
+	addTilesAndPieces() {
+        for(let rank = 0; rank < this.length; rank++) {
+            for(let file = 0; file < this.width; file++) {
+				const identifier = this.getPieceAt(rank,file);
+
+                if(identifier === undefined) {
+                    continue;
+                }
+
+                const tile = new Tile(
+					this.getTileNotationOf(rank, file),
+					rank % 2 === file % 2 ? 'dark' : 'light'
+				);
+                tile.position.set(rank, -0.05, file);
+				tile.userData = {
+					'rank': rank,
+					'file': file
+				};
+				this.tiles.add(tile);
+
+				if(identifier === '-') {
+                    continue;
+                }
+
+				const piece = new Piece(
+					identifier.toLowerCase(),
+					identifier === identifier.toLowerCase() ? 'white' : 'black',
+					this.getTileNotationOf(rank, file)
+				);
+				piece.position.set(rank, 0, file);
+				this.pieces.add(piece);
+
+				this.board[rank][file] = piece;
+            };
+        };
+
+		this.tiles.position.set((-this.length / 2) + 0.5, 0, (-this.width / 2) + 0.5);
+		this.pieces.position.set((-this.length / 2) + 0.5, 0, (-this.width / 2) + 0.5);
 	}
 
 	getRankAndFileOf(piece) {
@@ -96,7 +107,7 @@ class Level {
 			case 'pawn':
 				for(const move of piece.getAllMoves(rank, file)) {
 					const target = this.getPieceAt(move[0], move[1]);
-					const direction = this.color === 'white' ? 1 : 0;
+					const direction = piece.color === 'white' ? 1 : -1;
 
 					if(target === undefined) {
 						continue;
@@ -108,14 +119,15 @@ class Level {
 						&& target.color !== piece.color
 					) {
 						validMoves.push(this.getTileNotationOf(move[0], move[1]));
-					} else if (
+					} else if(
 						file === move[1]
-						&& (
-							rank === move[0] - 1
-							|| this.getPieceAt(move[0], move[1] - 1) === '-'
-						) && target === '-'
+						&& target === '-'
 					) {
-						validMoves.push(this.getTileNotationOf(move[0], move[1]));
+						if(move[0] - direction === rank) {
+							validMoves.push(this.getTileNotationOf(move[0], move[1]));
+						} else if(this.getPieceAt(move[0] - direction, move[1]) === '-') {
+							validMoves.push(this.getTileNotationOf(move[0], move[1]));
+						}
 					}
 				}
 				break;
@@ -192,49 +204,6 @@ class Level {
 		}
 
 		return validMoves;
-	}
-
-	loadBoard() {
-		this.tiles = new Group();
-		this.pieces = new Group();
-
-        for(let rank = 0; rank < this.length; rank++) {
-            for(let file = 0; file < this.width; file++) {
-				const identifier = this.getPieceAt(rank,file);
-
-                if(identifier === undefined) {
-                    continue;
-                }
-
-                const tile = new Tile(
-					this.getTileNotationOf(rank, file),
-					rank % 2 === file % 2 ? 'dark' : 'light'
-				);
-                tile.position.set(rank, -0.05, file);
-				tile.userData = {
-					'rank': rank,
-					'file': file
-				};
-				this.tiles.add(tile);
-
-				if(identifier === '-') {
-                    continue;
-                }
-
-				const piece = new Piece(
-					identifier.toLowerCase(),
-					identifier === identifier.toLowerCase() ? 'white' : 'black',
-					this.getTileNotationOf(rank, file)
-				);
-				piece.position.set(rank, 0, file);
-				this.pieces.add(piece);
-
-				this.board[rank][file] = piece;
-            };
-        };
-
-		this.tiles.position.set((-this.length / 2) + 0.5, 0, (-this.width / 2) + 0.5);
-		this.pieces.position.set((-this.length / 2) + 0.5, 0, (-this.width / 2) + 0.5);
 	}
 
 	isTileUnderAttack(rank, file, color) {

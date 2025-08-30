@@ -112,7 +112,7 @@ class Piece extends Group {
                     [rank, file - 1],
                     [rank - 1, file - 1],
                     [rank + 1, file - 1],
-                    [rank - 1, file + 1] 
+                    [rank - 1, file + 1]
                 );
                 break;
         }
