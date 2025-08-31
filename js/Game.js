@@ -122,7 +122,6 @@ class Game {
                 document.body.style.cursor = 'grabbing';
 
                 this.selectedPiece = piece;
-                // this.scene.addEffect(this.selectedPiece);
                 this.grabbingPiece = true;
 
                 this.validMoves = this.level.getValidMoves(piece);
