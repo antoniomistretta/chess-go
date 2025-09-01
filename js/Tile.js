@@ -11,6 +11,8 @@ class Tile extends Mesh {
         this.name = name;
         this.material.emissive.set(0XFFFFFF);
         this.material.emissiveIntensity = 0;
+        this.material.transparent = true;
+        this.material.opacity = 0;
 
         this.receiveShadow = true;
     }

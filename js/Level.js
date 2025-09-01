@@ -29,7 +29,7 @@ class Level {
 					this.getTileNotationOf(rank, file),
 					rank % 2 === file % 2 ? 'dark' : 'light'
 				);
-                tile.position.set(rank, -0.05, file);
+                tile.position.set(rank, 1, file);
 				tile.userData = {
 					'rank': rank,
 					'file': file
