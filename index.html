@@ -2,24 +2,20 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 		<title>Chess-Go</title>
-		<style>
-			body {
-				background-color: #2B2B2B;
-				margin: 0;
-			}
 
-			#interface {
-				position: absolute;
-				height: 100vh;
-				width: 100%;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-			}
-		</style>
+		<style>[v-cloak] {display: none }</style>
 
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.global.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser"></script>
 		<script src="https://cdn.jsdelivr.net/npm/gsap/dist/gsap.min.js"></script>
+
 		<script type="importmap">
 		{
 			"imports": {
@@ -29,9 +25,56 @@
 		}
 		</script>
 	</head>
-	<body>
-		<div id="interface">
-			<button>Start</button>
+	<body class="bg-[#2B2B2B]">
+		<div
+			v-cloak
+			id="interface"
+			class="absolute w-screen h-screen p-4"
+		>
+			<div
+				v-show="!gameInProgress"
+				class="w-full h-full flex justify-center items-center"
+			>
+				<div
+					v-if="menuScreen === 'main'"
+					class="max-w-md flex flex-col gap-12"
+				>
+					<img
+						class="mb-12"
+						src="png/logo.png"
+					/>
+
+					<button
+						v-on:click="startGame('versus', 'classic')"
+						class="w-full cursor-pointer bg-[#3c281b] text-[#f3c35d] py-6 font-bold text-5xl font-[Jua] uppercase rounded-lg border border-4 border-[#f3c35d]"
+					>
+						Versus
+					</button>
+
+					<button
+						v-on:click="menuScreen = 'levels'"
+						class="w-full cursor-pointer bg-[#3c281b] text-[#f3c35d] py-6 font-bold text-5xl font-[Jua] uppercase rounded-lg border border-4 border-[#f3c35d]"
+					>
+						Puzzles
+					</button>
+				</div>
+
+				<div
+					v-if="menuScreen === 'levels'"
+					class="w-full grid grid-cols-3 gap-4 auto-rows-max"
+				>
+					<div
+						v-for="level of [1,2,3,4,6,7,8,9]"
+						v-on:click="startGame('puzzle', level)"
+						class="aspect-square flex justify-center items-center cursor-pointer bg-[#3c281b] text-[#f3c35d] py-6 font-bold text-5xl font-[Jua] uppercase rounded-lg border border-4 border-[#f3c35d]"
+					>
+						<span
+							v-text="level"
+							class=""
+						></span>
+					</div>
+				</div>
+			</div>
 		</div>
 		<script type="module" src="main.js"></script>
 	</body>

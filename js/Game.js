@@ -55,15 +55,16 @@ const intersects = [];
 
 class Game {
 	constructor() {
-		this.cursor = new Cursor();
-		this.scene = new Scene();
-		this.level = new Level(levels['classic']);
 
-		this.loadLevel();
-		this.startGame();
 	}
 
-	startGame() {
+	start() {
+		this.cursor = new Cursor();
+		this.scene = new Scene();
+		this.level = new Level(levels['test']);
+
+		this.loadLevel();
+
 		this.selectedPiece = null;
 		this.grabbingPiece = false;
 		this.validMoves = [];
@@ -87,17 +88,17 @@ class Game {
 			if(tile.type === "Mesh") {
 				gsap.to(tile.position, {
 					y: -0.05,
-					duration: 0.1,
+					duration: 0.25,
 					delay: i
 				});
 
 				gsap.to(tile.material, {
 					opacity: 1,
-					duration: 0.1,
+					duration: 0.25,
 					delay: i
 				});
 
-				i += 0.01;
+				i += 0.10;
 			}
 		});
 
