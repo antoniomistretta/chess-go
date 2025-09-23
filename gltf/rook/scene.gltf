@@ -3,64 +3,146 @@
     {
       "bufferView": 1,
       "componentType": 5126,
-      "count": 756,
+      "count": 65532,
       "max": [
-        2.0104401111602783,
-        2.0104401111602783,
-        0.5892300009727478
+        13.245360374450684,
+        13.245360374450684,
+        53.44401168823242
       ],
       "min": [
-        -2.0104401111602783,
-        -2.0104401111602783,
-        -5.156829833984375
+        -13.245360374450684,
+        -13.245360374450684,
+        26.776409149169922
       ],
       "type": "VEC3"
     },
     {
       "bufferView": 1,
-      "byteOffset": 9072,
+      "byteOffset": 786384,
       "componentType": 5126,
-      "count": 756,
+      "count": 65532,
       "max": [
-        0.9675395488739014,
-        0.9675370454788208,
+        1.0,
+        0.9999979138374329,
         1.0
       ],
       "min": [
-        -0.9675395488739014,
-        -0.9675395488739014,
-        -1.0
+        -1.0,
+        -0.9999975562095642,
+        -0.8497117161750793
       ],
       "type": "VEC3"
     },
     {
       "bufferView": 0,
       "componentType": 5125,
-      "count": 1524,
+      "count": 373731,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 1572768,
+      "componentType": 5126,
+      "count": 65532,
+      "max": [
+        17.858930587768555,
+        17.85589027404785,
+        53.44401168823242
+      ],
+      "min": [
+        -17.858930587768555,
+        -17.85589027404785,
+        0.0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 2359152,
+      "componentType": 5126,
+      "count": 65532,
+      "max": [
+        1.0,
+        0.9999979138374329,
+        1.0
+      ],
+      "min": [
+        -1.0,
+        -0.9999539852142334,
+        -1.0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 1494924,
+      "componentType": 5125,
+      "count": 358746,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 3145536,
+      "componentType": 5126,
+      "count": 28210,
+      "max": [
+        16.880069732666016,
+        16.87718963623047,
+        40.21487045288086
+      ],
+      "min": [
+        -16.880069732666016,
+        -16.87718963623047,
+        4.5375518798828125
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 3484056,
+      "componentType": 5126,
+      "count": 28210,
+      "max": [
+        1.0,
+        0.9998292922973633,
+        0.9617074131965637
+      ],
+      "min": [
+        -1.0,
+        -0.9998292922973633,
+        -0.9146753549575806
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 2929908,
+      "componentType": 5125,
+      "count": 158967,
       "type": "SCALAR"
     }
   ],
   "asset": {
     "extras": {
-      "author": "Chris (https://sketchfab.com/robie1)",
+      "author": "Jeyhun1985 (https://sketchfab.com/Jeyhun1985)",
       "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
-      "source": "https://sketchfab.com/3d-models/low-poly-rook-85c808e4192c46edb17e89a4cdc42392",
-      "title": "Low Poly Rook"
+      "source": "https://sketchfab.com/3d-models/rook-staunton-full-size-chess-set-39a02aa72ed64856a68f039db0626538",
+      "title": "Rook - Staunton Full Size Chess Set"
     },
-    "generator": "Sketchfab-12.68.0",
+    "generator": "Sketchfab-16.73.0",
     "version": "2.0"
   },
   "bufferViews": [
     {
       "buffer": 0,
-      "byteLength": 6096,
+      "byteLength": 3565776,
       "name": "floatBufferViews",
       "target": 34963
     },
     {
       "buffer": 0,
-      "byteLength": 18144,
-      "byteOffset": 6096,
+      "byteLength": 3822576,
+      "byteOffset": 3565776,
       "byteStride": 12,
       "name": "floatBufferViews",
       "target": 34962
@@ -68,23 +150,29 @@
   ],
   "buffers": [
     {
-      "byteLength": 24240,
+      "byteLength": 7388352,
       "uri": "scene.bin"
     }
   ],
   "materials": [
     {
       "doubleSided": true,
-      "name": "Root",
+      "name": "Scene_-_Root",
       "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.9911020971138296,
+          0.9215818562772946,
+          0.768151147247507,
+          1.0
+        ],
         "metallicFactor": 0.0,
-        "roughnessFactor": 0.6
+        "roughnessFactor": 0.35
       }
     }
   ],
   "meshes": [
     {
-      "name": "Rook_0",
+      "name": "Object_0",
       "primitives": [
         {
           "attributes": {
@@ -92,6 +180,34 @@
             "POSITION": 0
           },
           "indices": 2,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Object_1",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 4,
+            "POSITION": 3
+          },
+          "indices": 5,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Object_2",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 7,
+            "POSITION": 6
+          },
+          "indices": 8,
           "material": 0,
           "mode": 4
         }
@@ -126,64 +242,22 @@
     {
       "children": [
         2,
+        3,
         4
       ],
-      "name": "Root"
-    },
-    {
-      "children": [
-        3
-      ],
-      "matrix": [
-        -0.29086000000000006,
-        0.9551700000000001,
-        -0.05519000000000001,
-        0.0,
-        -0.7711,
-        -0.19988000000000003,
-        0.6045200000000001,
-        0.0,
-        0.5663900000000001,
-        0.21839000000000003,
-        0.7946700000000001,
-        0.0,
-        4.076250000000001,
-        1.00545,
-        5.903860000000001,
-        1.0
-      ],
-      "name": "Lamp"
-    },
-    {
-      "name": "Lamp"
-    },
-    {
-      "children": [
-        5
-      ],
-      "matrix": [
-        0.74611,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.74611,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.74611,
-        0.0,
-        0.0,
-        0.0,
-        3.84754,
-        1.0
-      ],
-      "name": "Rook"
+      "name": "Rook.stl.cleaner.materialmerger.gles"
     },
     {
       "mesh": 0,
-      "name": "Rook_0"
+      "name": "Object_2"
+    },
+    {
+      "mesh": 1,
+      "name": "Object_3"
+    },
+    {
+      "mesh": 2,
+      "name": "Object_4"
     }
   ],
   "scene": 0,

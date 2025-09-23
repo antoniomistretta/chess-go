@@ -3,64 +3,146 @@
     {
       "bufferView": 1,
       "componentType": 5126,
-      "count": 688,
+      "count": 65532,
       "max": [
-        4.796060085296631,
-        4.796060085296631,
-        -1.2415200471878052
+        19.16986083984375,
+        19.169849395751953,
+        87.58979034423828
       ],
       "min": [
-        -4.796060085296631,
-        -4.796060085296631,
-        -46.33290100097656
+        -19.169849395751953,
+        -19.169849395751953,
+        5.0033369064331055
       ],
       "type": "VEC3"
     },
     {
       "bufferView": 1,
-      "byteOffset": 8256,
+      "byteOffset": 786384,
       "componentType": 5126,
-      "count": 688,
+      "count": 65532,
       "max": [
-        0.954780101776123,
-        0.954780101776123,
-        0.9212097525596619
+        1.0,
+        0.9999622106552124,
+        1.0
       ],
       "min": [
-        -0.954780101776123,
-        -0.954780101776123,
-        -1.0
+        -1.0,
+        -0.9999973773956299,
+        -0.9638746976852417
       ],
       "type": "VEC3"
     },
     {
       "bufferView": 0,
       "componentType": 5125,
-      "count": 1002,
+      "count": 383634,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 1572768,
+      "componentType": 5126,
+      "count": 65532,
+      "max": [
+        20.38018035888672,
+        20.376689910888672,
+        99.52021026611328
+      ],
+      "min": [
+        -20.38018035888672,
+        -20.376689910888672,
+        0.0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 2359152,
+      "componentType": 5126,
+      "count": 65532,
+      "max": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "min": [
+        -1.0,
+        -1.0,
+        -1.0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 1534536,
+      "componentType": 5125,
+      "count": 373899,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 3145536,
+      "componentType": 5126,
+      "count": 50184,
+      "max": [
+        13.423879623413086,
+        13.42158031463623,
+        69.91890716552734
+      ],
+      "min": [
+        -13.423870086669922,
+        -13.42158031463623,
+        27.60103988647461
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 3747744,
+      "componentType": 5126,
+      "count": 50184,
+      "max": [
+        1.0,
+        0.9999662041664124,
+        1.0
+      ],
+      "min": [
+        -1.0,
+        -0.9999662041664124,
+        -0.9632980227470398
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 3030132,
+      "componentType": 5125,
+      "count": 290739,
       "type": "SCALAR"
     }
   ],
   "asset": {
     "extras": {
-      "author": "Chris (https://sketchfab.com/robie1)",
+      "author": "Jeyhun1985 (https://sketchfab.com/Jeyhun1985)",
       "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
-      "source": "https://sketchfab.com/3d-models/low-poly-king-b50320bcb1dc4aa0be891c22e8d2afd3",
-      "title": "Low Poly King"
+      "source": "https://sketchfab.com/3d-models/king-staunton-full-size-chess-set-cc297467241f42e1a384c7e5d0369143",
+      "title": "King - Staunton Full Size Chess Set."
     },
-    "generator": "Sketchfab-12.68.0",
+    "generator": "Sketchfab-16.73.0",
     "version": "2.0"
   },
   "bufferViews": [
     {
       "buffer": 0,
-      "byteLength": 4008,
+      "byteLength": 4193088,
       "name": "floatBufferViews",
       "target": 34963
     },
     {
       "buffer": 0,
-      "byteLength": 16512,
-      "byteOffset": 4008,
+      "byteLength": 4349952,
+      "byteOffset": 4193088,
       "byteStride": 12,
       "name": "floatBufferViews",
       "target": 34962
@@ -68,23 +150,29 @@
   ],
   "buffers": [
     {
-      "byteLength": 20520,
+      "byteLength": 8543040,
       "uri": "scene.bin"
     }
   ],
   "materials": [
     {
       "doubleSided": true,
-      "name": "Root",
+      "name": "Scene_-_Root",
       "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.9911020971138296,
+          0.9215818562772946,
+          0.768151147247507,
+          1.0
+        ],
         "metallicFactor": 0.0,
-        "roughnessFactor": 0.6
+        "roughnessFactor": 0.35
       }
     }
   ],
   "meshes": [
     {
-      "name": "Sphere_0",
+      "name": "Object_0",
       "primitives": [
         {
           "attributes": {
@@ -92,6 +180,34 @@
             "POSITION": 0
           },
           "indices": 2,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Object_1",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 4,
+            "POSITION": 3
+          },
+          "indices": 5,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Object_2",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 7,
+            "POSITION": 6
+          },
+          "indices": 8,
           "material": 0,
           "mode": 4
         }
@@ -126,64 +242,22 @@
     {
       "children": [
         2,
+        3,
         4
       ],
-      "name": "Root"
-    },
-    {
-      "children": [
-        3
-      ],
-      "matrix": [
-        -0.29086000000000006,
-        0.9551700000000001,
-        -0.05519000000000001,
-        0.0,
-        -0.7711,
-        -0.19988000000000003,
-        0.6045200000000001,
-        0.0,
-        0.5663900000000001,
-        0.21839000000000003,
-        0.7946700000000001,
-        0.0,
-        4.076250000000001,
-        1.00545,
-        5.903860000000001,
-        1.0
-      ],
-      "name": "Lamp"
-    },
-    {
-      "name": "Lamp"
-    },
-    {
-      "children": [
-        5
-      ],
-      "matrix": [
-        0.44920000000000004,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.44920000000000004,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.20759000000000002,
-        0.0,
-        0.0,
-        0.0,
-        9.671289999999999,
-        1.0
-      ],
-      "name": "Sphere"
+      "name": "King.stl.cleaner.materialmerger.gles"
     },
     {
       "mesh": 0,
-      "name": "Sphere_0"
+      "name": "Object_2"
+    },
+    {
+      "mesh": 1,
+      "name": "Object_3"
+    },
+    {
+      "mesh": 2,
+      "name": "Object_4"
     }
   ],
   "scene": 0,

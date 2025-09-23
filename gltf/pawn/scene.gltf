@@ -3,32 +3,32 @@
     {
       "bufferView": 1,
       "componentType": 5126,
-      "count": 452,
+      "count": 65532,
       "max": [
-        2.0104401111602783,
-        2.0104401111602783,
-        1.0
+        14.344599723815918,
+        14.34214973449707,
+        49.27455139160156
       ],
       "min": [
-        -2.0104401111602783,
-        -2.0104401111602783,
-        -5.156829833984375
+        -14.344599723815918,
+        -14.34214973449707,
+        0.0
       ],
       "type": "VEC3"
     },
     {
       "bufferView": 1,
-      "byteOffset": 5424,
+      "byteOffset": 786384,
       "componentType": 5126,
-      "count": 452,
+      "count": 65532,
       "max": [
-        0.9237039685249329,
-        0.9412715435028076,
+        1.0,
+        0.9999618530273438,
         1.0
       ],
       "min": [
-        -0.9237039685249329,
-        -0.9412715435028076,
+        -1.0,
+        -0.9999618530273438,
         -1.0
       ],
       "type": "VEC3"
@@ -36,31 +36,72 @@
     {
       "bufferView": 0,
       "componentType": 5125,
-      "count": 672,
+      "count": 385023,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 1572768,
+      "componentType": 5126,
+      "count": 28682,
+      "max": [
+        13.548060417175293,
+        9.355376243591309,
+        34.91511154174805
+      ],
+      "min": [
+        -13.422450065612793,
+        -13.434450149536133,
+        0.0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 1916952,
+      "componentType": 5126,
+      "count": 28682,
+      "max": [
+        1.0,
+        0.9998874664306641,
+        0.9864679574966431
+      ],
+      "min": [
+        -1.0,
+        -0.9998874664306641,
+        -1.0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 1540092,
+      "componentType": 5125,
+      "count": 163407,
       "type": "SCALAR"
     }
   ],
   "asset": {
     "extras": {
-      "author": "Chris (https://sketchfab.com/robie1)",
+      "author": "Jeyhun1985 (https://sketchfab.com/Jeyhun1985)",
       "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
-      "source": "https://sketchfab.com/3d-models/low-poly-pawn-8e40312a89c24240b37ead49805ce173",
-      "title": "Low Poly Pawn"
+      "source": "https://sketchfab.com/3d-models/pawn-staunton-full-size-chess-set-ba992ea7fa094032a521c474e9aea09f",
+      "title": "Pawn - Staunton Full Size Chess Set"
     },
-    "generator": "Sketchfab-12.67.0",
+    "generator": "Sketchfab-16.73.0",
     "version": "2.0"
   },
   "bufferViews": [
     {
       "buffer": 0,
-      "byteLength": 2688,
+      "byteLength": 2193720,
       "name": "floatBufferViews",
       "target": 34963
     },
     {
       "buffer": 0,
-      "byteLength": 10848,
-      "byteOffset": 2688,
+      "byteLength": 2261136,
+      "byteOffset": 2193720,
       "byteStride": 12,
       "name": "floatBufferViews",
       "target": 34962
@@ -68,23 +109,29 @@
   ],
   "buffers": [
     {
-      "byteLength": 13536,
+      "byteLength": 4454856,
       "uri": "scene.bin"
     }
   ],
   "materials": [
     {
       "doubleSided": true,
-      "name": "Root",
+      "name": "Scene_-_Root",
       "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.9911020971138296,
+          0.9215818562772946,
+          0.768151147247507,
+          1.0
+        ],
         "metallicFactor": 0.0,
-        "roughnessFactor": 0.6
+        "roughnessFactor": 0.35
       }
     }
   ],
   "meshes": [
     {
-      "name": "Pawn_0",
+      "name": "Object_0",
       "primitives": [
         {
           "attributes": {
@@ -92,6 +139,20 @@
             "POSITION": 0
           },
           "indices": 2,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Object_1",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 4,
+            "POSITION": 3
+          },
+          "indices": 5,
           "material": 0,
           "mode": 4
         }
@@ -126,64 +187,17 @@
     {
       "children": [
         2,
-        4
-      ],
-      "name": "Root"
-    },
-    {
-      "children": [
         3
       ],
-      "matrix": [
-        -0.29086000000000006,
-        0.9551700000000001,
-        -0.05519000000000001,
-        0.0,
-        -0.7711,
-        -0.19988000000000003,
-        0.6045200000000001,
-        0.0,
-        0.5663900000000001,
-        0.21839000000000003,
-        0.7946700000000001,
-        0.0,
-        4.076250000000001,
-        1.00545,
-        5.903860000000001,
-        1.0
-      ],
-      "name": "Lamp"
-    },
-    {
-      "name": "Lamp"
-    },
-    {
-      "children": [
-        5
-      ],
-      "matrix": [
-        0.74611,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.74611,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.74611,
-        0.0,
-        0.0,
-        0.0,
-        3.84754,
-        1.0
-      ],
-      "name": "Pawn"
+      "name": "Pawn.stl.cleaner.materialmerger.gles"
     },
     {
       "mesh": 0,
-      "name": "Pawn_0"
+      "name": "Object_2"
+    },
+    {
+      "mesh": 1,
+      "name": "Object_3"
     }
   ],
   "scene": 0,

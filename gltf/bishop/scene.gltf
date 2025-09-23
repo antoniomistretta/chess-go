@@ -3,32 +3,32 @@
     {
       "bufferView": 1,
       "componentType": 5126,
-      "count": 790,
+      "count": 65532,
       "max": [
-        2.0104401111602783,
-        2.014319896697998,
-        1.3782000541687012
+        17.840179443359375,
+        17.837129592895508,
+        66.89363861083984
       ],
       "min": [
-        -2.0104401111602783,
-        -2.014319896697998,
-        -6.580729961395264
+        -17.840179443359375,
+        -17.837129592895508,
+        0.0
       ],
       "type": "VEC3"
     },
     {
       "bufferView": 1,
-      "byteOffset": 9480,
+      "byteOffset": 786384,
       "componentType": 5126,
-      "count": 790,
+      "count": 65532,
       "max": [
-        0.9995496273040771,
-        0.9234428405761719,
+        1.0,
+        0.9999621510505676,
         1.0
       ],
       "min": [
-        -0.9995289444923401,
-        -0.9234428405761719,
+        -1.0,
+        -0.9999621510505676,
         -1.0
       ],
       "type": "VEC3"
@@ -36,31 +36,113 @@
     {
       "bufferView": 0,
       "componentType": 5125,
-      "count": 1170,
+      "count": 376998,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 1572768,
+      "componentType": 5126,
+      "count": 65532,
+      "max": [
+        11.619170188903809,
+        16.866910934448242,
+        76.38240814208984
+      ],
+      "min": [
+        -11.910849571228027,
+        -16.399620056152344,
+        0.0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 2359152,
+      "componentType": 5126,
+      "count": 65532,
+      "max": [
+        1.0,
+        0.9999621510505676,
+        0.9999999403953552
+      ],
+      "min": [
+        -1.0,
+        -0.9999620914459229,
+        -1.0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 1507992,
+      "componentType": 5125,
+      "count": 367476,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 3145536,
+      "componentType": 5126,
+      "count": 26165,
+      "max": [
+        16.72071075439453,
+        16.717859268188477,
+        38.98154067993164
+      ],
+      "min": [
+        -16.720720291137695,
+        -16.717859268188477,
+        5.266923904418945
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 3459516,
+      "componentType": 5126,
+      "count": 26165,
+      "max": [
+        1.0,
+        0.9998294115066528,
+        0.9618009328842163
+      ],
+      "min": [
+        -1.0,
+        -0.9998294115066528,
+        -0.9251087307929993
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 2977896,
+      "componentType": 5125,
+      "count": 149682,
       "type": "SCALAR"
     }
   ],
   "asset": {
     "extras": {
-      "author": "Chris (https://sketchfab.com/robie1)",
+      "author": "Jeyhun1985 (https://sketchfab.com/Jeyhun1985)",
       "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
-      "source": "https://sketchfab.com/3d-models/low-poly-bishop-ba8ac6ba0fe24048943b435b1d6e85cf",
-      "title": "Low Poly Bishop"
+      "source": "https://sketchfab.com/3d-models/bishop-staunton-full-size-chess-set-945dd86e3d6b4db2ad66a29a87ee9ef2",
+      "title": "Bishop - Staunton Full Size Chess Set"
     },
-    "generator": "Sketchfab-12.68.0",
+    "generator": "Sketchfab-16.73.0",
     "version": "2.0"
   },
   "bufferViews": [
     {
       "buffer": 0,
-      "byteLength": 4680,
+      "byteLength": 3576624,
       "name": "floatBufferViews",
       "target": 34963
     },
     {
       "buffer": 0,
-      "byteLength": 18960,
-      "byteOffset": 4680,
+      "byteLength": 3773496,
+      "byteOffset": 3576624,
       "byteStride": 12,
       "name": "floatBufferViews",
       "target": 34962
@@ -68,23 +150,29 @@
   ],
   "buffers": [
     {
-      "byteLength": 23640,
+      "byteLength": 7350120,
       "uri": "scene.bin"
     }
   ],
   "materials": [
     {
       "doubleSided": true,
-      "name": "Root",
+      "name": "Scene_-_Root",
       "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.9911020971138296,
+          0.9215818562772946,
+          0.768151147247507,
+          1.0
+        ],
         "metallicFactor": 0.0,
-        "roughnessFactor": 0.6
+        "roughnessFactor": 0.35
       }
     }
   ],
   "meshes": [
     {
-      "name": "LP Bishop_0",
+      "name": "Object_0",
       "primitives": [
         {
           "attributes": {
@@ -92,6 +180,34 @@
             "POSITION": 0
           },
           "indices": 2,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Object_1",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 4,
+            "POSITION": 3
+          },
+          "indices": 5,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Object_2",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 7,
+            "POSITION": 6
+          },
+          "indices": 8,
           "material": 0,
           "mode": 4
         }
@@ -126,64 +242,22 @@
     {
       "children": [
         2,
+        3,
         4
       ],
-      "name": "Root"
-    },
-    {
-      "children": [
-        3
-      ],
-      "matrix": [
-        -0.29086000000000006,
-        0.9551700000000001,
-        -0.05519000000000001,
-        0.0,
-        -0.7711,
-        -0.19988000000000003,
-        0.6045200000000001,
-        0.0,
-        0.5663900000000001,
-        0.21839000000000003,
-        0.7946700000000001,
-        0.0,
-        4.076250000000001,
-        1.00545,
-        5.903860000000001,
-        1.0
-      ],
-      "name": "Lamp"
-    },
-    {
-      "name": "Lamp"
-    },
-    {
-      "children": [
-        5
-      ],
-      "matrix": [
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        0.0,
-        0.11175000000000002,
-        0.0,
-        6.7554099999999995,
-        1.0
-      ],
-      "name": "LP Bishop"
+      "name": "Bishop.stl.cleaner.materialmerger.gles"
     },
     {
       "mesh": 0,
-      "name": "LP Bishop_0"
+      "name": "Object_2"
+    },
+    {
+      "mesh": 1,
+      "name": "Object_3"
+    },
+    {
+      "mesh": 2,
+      "name": "Object_4"
     }
   ],
   "scene": 0,

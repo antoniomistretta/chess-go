@@ -3,64 +3,146 @@
     {
       "bufferView": 1,
       "componentType": 5126,
-      "count": 704,
+      "count": 65532,
       "max": [
-        2.0104401111602783,
-        2.014319896697998,
-        1.5047800540924072
+        20.373249053955078,
+        20.369770050048828,
+        93.9186782836914
       ],
       "min": [
-        -2.0104401111602783,
-        -2.014319896697998,
-        -6.580729961395264
+        -20.36482048034668,
+        -20.36482048034668,
+        0.7285370230674744
       ],
       "type": "VEC3"
     },
     {
       "bufferView": 1,
-      "byteOffset": 8448,
+      "byteOffset": 786384,
       "componentType": 5126,
-      "count": 704,
+      "count": 65532,
       "max": [
-        0.9241118431091309,
-        0.9235902428627014,
-        0.9725603461265564
+        1.0,
+        0.9999662637710571,
+        1.0
       ],
       "min": [
-        -0.9241118431091309,
-        -0.9235902428627014,
-        -1.0
+        -1.0,
+        -0.9999662637710571,
+        -0.9475764632225037
       ],
       "type": "VEC3"
     },
     {
       "bufferView": 0,
       "componentType": 5125,
-      "count": 1002,
+      "count": 372378,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 1572768,
+      "componentType": 5126,
+      "count": 65532,
+      "max": [
+        20.38018035888672,
+        20.376689910888672,
+        88.16625213623047
+      ],
+      "min": [
+        -20.38018035888672,
+        -20.376689910888672,
+        0.0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 2359152,
+      "componentType": 5126,
+      "count": 65532,
+      "max": [
+        1.0,
+        0.9999670386314392,
+        1.0
+      ],
+      "min": [
+        -1.0,
+        -0.9999670386314392,
+        -1.0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 1489512,
+      "componentType": 5125,
+      "count": 353880,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 3145536,
+      "componentType": 5126,
+      "count": 27602,
+      "max": [
+        10.588910102844238,
+        10.721710205078125,
+        88.2867431640625
+      ],
+      "min": [
+        -8.382301330566406,
+        -10.616089820861816,
+        65.42755889892578
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 3476760,
+      "componentType": 5126,
+      "count": 27602,
+      "max": [
+        1.0,
+        0.9999622106552124,
+        1.0
+      ],
+      "min": [
+        -1.0,
+        -0.9999670386314392,
+        -0.9638801217079163
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 2905032,
+      "componentType": 5125,
+      "count": 157488,
       "type": "SCALAR"
     }
   ],
   "asset": {
     "extras": {
-      "author": "Chris (https://sketchfab.com/robie1)",
+      "author": "Jeyhun1985 (https://sketchfab.com/Jeyhun1985)",
       "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
-      "source": "https://sketchfab.com/3d-models/queen-low-poly-41e1d664650a4d50b37edc282d486f2b",
-      "title": "Queen - Low Poly"
+      "source": "https://sketchfab.com/3d-models/queen-staunton-full-size-chess-set-2f47e64f6f994c41bff0d58d42bd4475",
+      "title": "Queen - Staunton Full Size Chess Set"
     },
-    "generator": "Sketchfab-12.67.0",
+    "generator": "Sketchfab-16.73.0",
     "version": "2.0"
   },
   "bufferViews": [
     {
       "buffer": 0,
-      "byteLength": 4008,
+      "byteLength": 3534984,
       "name": "floatBufferViews",
       "target": 34963
     },
     {
       "buffer": 0,
-      "byteLength": 16896,
-      "byteOffset": 4008,
+      "byteLength": 3807984,
+      "byteOffset": 3534984,
       "byteStride": 12,
       "name": "floatBufferViews",
       "target": 34962
@@ -68,22 +150,29 @@
   ],
   "buffers": [
     {
-      "byteLength": 20904,
+      "byteLength": 7342968,
       "uri": "scene.bin"
     }
   ],
   "materials": [
     {
-      "name": "Root",
+      "doubleSided": true,
+      "name": "Scene_-_Root",
       "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.9911020971138296,
+          0.9215818562772946,
+          0.768151147247507,
+          1.0
+        ],
         "metallicFactor": 0.0,
-        "roughnessFactor": 0.6
+        "roughnessFactor": 0.35
       }
     }
   ],
   "meshes": [
     {
-      "name": "LP Queen_0",
+      "name": "Object_0",
       "primitives": [
         {
           "attributes": {
@@ -91,6 +180,34 @@
             "POSITION": 0
           },
           "indices": 2,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Object_1",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 4,
+            "POSITION": 3
+          },
+          "indices": 5,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Object_2",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 7,
+            "POSITION": 6
+          },
+          "indices": 8,
           "material": 0,
           "mode": 4
         }
@@ -125,64 +242,22 @@
     {
       "children": [
         2,
+        3,
         4
       ],
-      "name": "Root"
-    },
-    {
-      "children": [
-        3
-      ],
-      "matrix": [
-        -0.29086000000000006,
-        0.9551700000000001,
-        -0.05519000000000001,
-        0.0,
-        -0.7711,
-        -0.19988000000000003,
-        0.6045200000000001,
-        0.0,
-        0.5663900000000001,
-        0.21839000000000003,
-        0.7946700000000001,
-        0.0,
-        4.076250000000001,
-        1.00545,
-        5.903860000000001,
-        1.0
-      ],
-      "name": "Lamp"
-    },
-    {
-      "name": "Lamp"
-    },
-    {
-      "children": [
-        5
-      ],
-      "matrix": [
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        6.61025,
-        1.0
-      ],
-      "name": "LP Queen"
+      "name": "Queen.stl.cleaner.materialmerger.gles"
     },
     {
       "mesh": 0,
-      "name": "LP Queen_0"
+      "name": "Object_2"
+    },
+    {
+      "mesh": 1,
+      "name": "Object_3"
+    },
+    {
+      "mesh": 2,
+      "name": "Object_4"
     }
   ],
   "scene": 0,
