@@ -1,20 +1,24 @@
-import { BoxGeometry, Mesh } from 'three';
-import { LightTileMaterial, DarkTileMaterial } from '/js/Material.js';
+import { BoxGeometry, Mesh, MeshStandardMaterial } from 'three';
 
 class Tile extends Mesh {
-    constructor(name, type) {
+    constructor(name, rank, file) {
         super(
             new BoxGeometry(1, 0.1, 1),
-            type === 'light' ? new LightTileMaterial() : new DarkTileMaterial()
+            new MeshStandardMaterial({ color: rank % 2 === file % 2 ? 0XD2B48C : 0X664229 })
         );
 
         this.name = name;
-        this.material.emissive.set(0XFFFFFF);
-        this.material.emissiveIntensity = 0;
-        this.material.transparent = true;
-        this.material.opacity = 0;
+        this.userData = {
+            'rank': rank,
+            'file': file
+        };
 
         this.receiveShadow = true;
+        this.material.transparent = true;
+        this.material.opacity = 0;
+        this.material.emissive.set(0XFFFFFF);
+        this.material.emissiveIntensity = 0;
+        this.position.set(rank, -3, file);
     }
 
     highlight() {

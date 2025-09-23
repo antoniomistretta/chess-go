@@ -25,57 +25,58 @@
 		}
 		</script>
 	</head>
-	<body class="bg-[#2B2B2B]">
+	<body class="bg-neutral-800">
 		<div
 			v-cloak
 			id="interface"
-			class="absolute w-screen h-screen p-4"
+			class="absolute w-full h-full p-4"
 		>
 			<div
-				v-show="!gameInProgress"
-				class="w-full h-full flex justify-center items-center"
+				v-if="uiState === 'loading'"
+				class="h-full flex items-center"
 			>
-				<div
-					v-if="menuScreen === 'main'"
-					class="max-w-md flex flex-col gap-12"
-				>
-					<img
-						class="mb-12"
-						src="png/logo.png"
-					/>
-
-					<button
-						v-on:click="startGame('versus', 'classic')"
-						class="w-full cursor-pointer bg-[#3c281b] text-[#f3c35d] py-6 font-bold text-5xl font-[Jua] uppercase rounded-lg border border-4 border-[#f3c35d]"
-					>
-						Versus
-					</button>
-
-					<button
-						v-on:click="menuScreen = 'levels'"
-						class="w-full cursor-pointer bg-[#3c281b] text-[#f3c35d] py-6 font-bold text-5xl font-[Jua] uppercase rounded-lg border border-4 border-[#f3c35d]"
-					>
-						Puzzles
-					</button>
-				</div>
-
-				<div
-					v-if="menuScreen === 'levels'"
-					class="w-full grid grid-cols-3 gap-4 auto-rows-max"
-				>
+				<div class="w-full bg-black rounded-full h-2.5">
 					<div
-						v-for="level of [1,2,3,4,6,7,8,9]"
-						v-on:click="startGame('puzzle', level)"
-						class="aspect-square flex justify-center items-center cursor-pointer bg-[#3c281b] text-[#f3c35d] py-6 font-bold text-5xl font-[Jua] uppercase rounded-lg border border-4 border-[#f3c35d]"
-					>
-						<span
-							v-text="level"
-							class=""
-						></span>
-					</div>
+						class="bg-white h-2.5 rounded-full"
+						:class="`w-[$(percentModelsLoaded)]%`"
+					></div>
 				</div>
 			</div>
+
+			<div
+				v-if="uiState === 'mainmenu'"
+				class="h-full max-w-sm mx-auto flex flex-col gap-4 justify-center items-center"
+			>
+				<img
+					src="png/logo.png"
+					alt="logo"
+					class="mb-8"
+				>
+
+				<button
+					v-on:click="handleUIAction('loadLevel', { level: 'classic' })"
+					class="cursor-pointer transition text-white bg-yellow-900 hover:bg-yellow-700 py-4 px-2 rounded-lg w-full text-4xl uppercase font-[Jua] border-4 border-amber-300"
+				>Versus</button>
+
+				<button
+					v-on:click="handleUIAction('showLevels')"
+					class="cursor-pointer transition text-white bg-yellow-900 hover:bg-yellow-700 py-4 px-2 rounded-lg w-full text-4xl uppercase font-[Jua] border-4 border-amber-300"
+				>Levels</button>
+			</div>
+
+			<div
+				v-if="uiState === 'levels'"
+				class="h-full max-w-sm mx-auto grid grid-cols-3 gap-4"
+			>
+				<button
+					v-for="level in [1,2,3,4,5]"
+					v-text="level"
+					v-on:click="handleUIAction('loadLevel', { level: level })"
+					class="text-white bg-yellow-900 py-4 px-2 rounded-lg w-full text-4xl uppercase font-[Jua]"
+				></button>
+			</div>
 		</div>
+
 		<script type="module" src="main.js"></script>
 	</body>
 </html>

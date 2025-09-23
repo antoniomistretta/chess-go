@@ -39,6 +39,11 @@ class Scene {
 		light.intensity = 25;
 		this.scene.add(light);
 
+		const geometry = new THREE.BoxGeometry( 1, 1, 1 );
+		const material = new THREE.MeshBasicMaterial( {color: 0X000000} );
+		const cube = new THREE.Mesh( geometry, material );
+		scene.add( cube );
+
 		const directionalLight = new DirectionalLight(0XFFFFFF, 0.5);
 		directionalLight.castShadow = true;
 		directionalLight.intensity = 3;

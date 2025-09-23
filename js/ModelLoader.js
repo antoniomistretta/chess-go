@@ -9,8 +9,9 @@ class ModelLoader {
         this.loader = new GLTFLoader(this.loadingManager);
     }
 
-    loadModels(models, onComplete) {
+    loadModels(models, onProgress, onComplete) {
         this.loadingManager.onLoad = onComplete;
+        this.loadingManager.onProgress = onProgress;
 
         for(const model of models) {
             this.loader.load(
@@ -19,8 +20,8 @@ class ModelLoader {
                     loadedModels[model] = object.scene;
                 }
             );
-        }
-    }
+        };
+    };
 
     get(model) {
         return loadedModels[model].clone();
