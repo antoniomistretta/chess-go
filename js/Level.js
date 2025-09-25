@@ -69,6 +69,19 @@ class Level {
 	getNotationOf(rank, file) {
 		return String.fromCharCode(97 + file) + String(rank + 1);
 	}
+
+	getRankAndFileOfNotation(notation) {
+		const rank = notation.split('')[1] - 1;
+		const file = notation.split('')[0].charCodeAt(0) - 97;
+
+		return { rank, file };
+	}
+
+	getValidMoves(piece) {
+		const validMoves = ['c4', 'd4'];
+
+		return validMoves;
+	}
 };
 
 export default Level;

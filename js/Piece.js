@@ -6,9 +6,13 @@ class Piece extends Mesh {
     constructor(identifier, rank, file) {
         super();
 
-        this.userData.piece = this.getPieceTypeByIdentifier(identifier);
-        this.userData.color = identifier === identifier.toLowerCase() ? 'white' : 'black';
-        this.userData.movedCount = 0;
+        this.userData = {
+            'piece': this.getPieceTypeByIdentifier(identifier),
+            'color': identifier === identifier.toLowerCase() ? 'white' : 'black',
+            'movedCount': 0,
+            'rank': rank,
+            'file': file
+        };
 
         if(this.type === 'king') {
 			this.name = color + ' king';
@@ -19,7 +23,7 @@ class Piece extends Mesh {
         model.traverse((object) => {
             if(object.isMesh) {
                 object.material = new MeshToonMaterial({
-                    color: this.userData.color === 'white' ? 0XF5F5F5 : 0X2B2B2B,
+                    color: this.userData.color === 'white' ? 0XE1BCA5 : 0X52301B,
                     gradientMap: this.createGradientMap(),
                 });
 

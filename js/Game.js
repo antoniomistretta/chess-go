@@ -1,4 +1,4 @@
-import { AmbientLight, DirectionalLight, OrthographicCamera, Raycaster, Scene, Vector2, WebGLRenderer } from 'three';
+import { AmbientLight, DirectionalLight, OrthographicCamera, Raycaster, Scene, Plane, Vector2, Vector3, WebGLRenderer } from 'three';
 
 import Cursor from '/js/Cursor.js';
 import Level from '/js/Level.js';
@@ -12,7 +12,10 @@ class Game {
 		this.scene = new Scene();
 		this.gameState = {
 			hoveredTile: null,
-			selectedTile: null
+			selectedPiece: null,
+			isGrabbing: false,
+			turn: 'white',
+			validMoves: []
 		};
 
 		this.fStop = 10;
@@ -131,36 +134,68 @@ class Game {
 		raycaster.setFromCamera(new Vector2(this.cursor.x, this.cursor.y), this.camera);
 
 		intersects.length = 0;
-		intersects.push(raycaster.intersectObjects(this.level.tiles.children));
+		intersects.push(...raycaster.intersectObjects(this.level.tiles.children));
 
-		if(intersects.length > 0) {
-			const hoveredTile = intersects[0].object;
-			console.log(hoveredTile);
+		this.gameState.hoveredTile = intersects?.[0]?.object ?? null;
+
+		if(this.gameState.isGrabbing) {
+			const planeZ = new Plane(new Vector3(0, 1, 0), 0);
+			const intersection = new Vector3();
+			raycaster.ray.intersectPlane(planeZ, intersection);
+
+			this.gameState.selectedPiece.position.set(intersection.x + (8 / 2) - 0.5, 0, intersection.z + (8 / 2) - 0.5);
 		}
 	};
 
 	handleCursorDown = () => {
-		// select a tile if one is not already selected
+		if(this.gameState.hoveredTile !== null) {
+			if(this.level.getPieceAt(this.gameState.hoveredTile?.userData.rank, this.gameState.hoveredTile?.userData.file)?.userData?.color === this.gameState.turn) {
+				this.gameState.isGrabbing = true;
+				this.gameState.selectedPiece = this.level.getPieceAt(this.gameState.hoveredTile.userData.rank, this.gameState.hoveredTile.userData.file);
+				this.gameState.validMoves = this.level.getValidMoves(this.gameState.selectedPiece);
+			} else if(!this.gameState.validMoves.includes(this.gameState.hoveredTile?.userData?.name)) {
+				this.gameState.selectedPiece = null;
+				this.gameState.validMoves = [];
+			}
+		} else {
+			this.gameState.selectedPiece = null;
+			this.gameState.validMoves = [];
+		}
+	};
+
+	handleCursorUp = () => {
+		const animateMove = !this.grabbingPiece;
+		this.gameState.isGrabbing = false;
+
+		if(this.gameState.selectedPiece !== null) {
+			const piece = this.gameState.selectedPiece;
+
+			if(this.gameState.validMoves.includes(this.gameState.hoveredTile.name)) {
+				piece.userData.movedCount += 1;
+			} else {
+				piece.position.set(piece.userData.rank, 0, piece.userData.file);
+			}
+		}
 	};
 
 	addEventsListeners() {
 		document.addEventListener('mousemove', this.handleCursorMove);
 		document.addEventListener('mousedown', this.handleCursorDown);
-		// document.addEventListener('mouseup', this.handleCursorUp);
+		document.addEventListener('mouseup', this.handleCursorUp);
 
 		document.addEventListener('touchmove', this.handleCursorMove);
 		document.addEventListener('touchstart', this.handleCursorDown);
-		// document.addEventListener('touchend', this.handleCursorUp());
+		document.addEventListener('touchend', this.handleCursorUp());
 	};
 
 	removeEventListeners() {
 		document.removeEventListener('mousemove', this.handleCursorMove);
 		document.removeEventListener('mousedown', this.handleCursorDown);
-		// document.removeEventListener('mouseup', this.handleCursorUp);
+		document.removeEventListener('mouseup', this.handleCursorUp);
 
 		document.removeEventListener('touchmove', this.handleCursorMove);
 		document.removeEventListener('touchstart', this.handleCursorDown);
-		// document.removeEventListener('touchend', this.handleCursorUp);
+		document.removeEventListener('touchend', this.handleCursorUp);
 	};
 };
 

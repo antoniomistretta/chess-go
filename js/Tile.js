@@ -22,10 +22,14 @@ class Tile extends Mesh {
     }
 
     highlight() {
+        this.material.emissiveIntensity = 1;
+    }
+
+    hover() {
         this.material.emissiveIntensity = 0.5;
     }
 
-    unhighlight() {
+    reset() {
         this.material.emissiveIntensity = 0;
     }
 }
