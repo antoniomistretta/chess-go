@@ -3,16 +3,13 @@ import { AmbientLight, DirectionalLight, OrthographicCamera, Raycaster, Scene, P
 import Cursor from '/js/Cursor.js';
 import Level from '/js/Level.js';
 
-const raycaster = new Raycaster();
-const intersects = [];
-
 class Game {
 	constructor() {
 		this.cursor = new Cursor();
 		this.scene = new Scene();
 		this.gameState = {
 			hoveredTile: null,
-			selectedPiece: null,
+			selectedTile: null,
 			isGrabbing: false,
 			turn: 'white',
 			validMoves: []
@@ -131,49 +128,107 @@ class Game {
 	};
 
 	handleCursorMove = () => {
+		const raycaster = new Raycaster();
 		raycaster.setFromCamera(new Vector2(this.cursor.x, this.cursor.y), this.camera);
+		const intersects = raycaster.intersectObjects(this.level.tiles.children);
 
-		intersects.length = 0;
-		intersects.push(...raycaster.intersectObjects(this.level.tiles.children));
+		if(intersects.length > 0) {
+			this.gameState.hoveredTile = intersects[0].object;
 
-		this.gameState.hoveredTile = intersects?.[0]?.object ?? null;
+			if(this.level.getPieceAt(this.gameState.hoveredTile.userData.rank, this.gameState.hoveredTile.userData.file)?.userData?.color === this.gameState.turn) {
+				document.body.style.cursor = 'grab';
+			} else {
+				document.body.style.cursor = 'default';
+			}
+		} else {
+			this.gameState.hoveredTile = null;
+			document.body.style.cursor = 'default';
+		}
 
 		if(this.gameState.isGrabbing) {
+			document.body.style.cursor = 'grabbing';
+
 			const planeZ = new Plane(new Vector3(0, 1, 0), 0);
 			const intersection = new Vector3();
 			raycaster.ray.intersectPlane(planeZ, intersection);
 
-			this.gameState.selectedPiece.position.set(intersection.x + (8 / 2) - 0.5, 0, intersection.z + (8 / 2) - 0.5);
+			this.level.getPieceAt(this.gameState.selectedTile.userData.rank, this.gameState.selectedTile.userData.file).position.set(intersection.x + (8 / 2) - 0.5, 0, intersection.z + (8 / 2) - 0.5);
 		}
 	};
 
 	handleCursorDown = () => {
 		if(this.gameState.hoveredTile !== null) {
-			if(this.level.getPieceAt(this.gameState.hoveredTile?.userData.rank, this.gameState.hoveredTile?.userData.file)?.userData?.color === this.gameState.turn) {
+			if(this.level.getPieceAt(this.gameState.hoveredTile.userData.rank, this.gameState.hoveredTile.userData.file)?.userData?.color === this.gameState.turn) {
+				if(this.gameState.selectedTile !== null) {
+					this.gameState.selectedTile.reset();
+					this.gameState.selectedTile = null;
+					this.gameState.validMoves = [];
+				}
+
 				this.gameState.isGrabbing = true;
-				this.gameState.selectedPiece = this.level.getPieceAt(this.gameState.hoveredTile.userData.rank, this.gameState.hoveredTile.userData.file);
-				this.gameState.validMoves = this.level.getValidMoves(this.gameState.selectedPiece);
-			} else if(!this.gameState.validMoves.includes(this.gameState.hoveredTile?.userData?.name)) {
-				this.gameState.selectedPiece = null;
+				document.body.style.cursor = 'grabbing';
+				this.gameState.selectedTile = this.gameState.hoveredTile;
+				this.gameState.selectedTile.select();
+				this.gameState.validMoves = this.level.getValidMoves(this.level.getPieceAt(this.gameState.hoveredTile.userData.rank, this.gameState.hoveredTile.userData.file));
+			} else if(!this.gameState.validMoves.includes(this.gameState.hoveredTile.name)) {
+				this.gameState.selectedTile.reset();
+				this.gameState.selectedTile = null;
 				this.gameState.validMoves = [];
 			}
-		} else {
-			this.gameState.selectedPiece = null;
+		} else if(this.gameState.selectedTile !== null) {
+			this.gameState.selectedTile.reset();
+			this.gameState.selectedTile = null;
 			this.gameState.validMoves = [];
 		}
 	};
 
 	handleCursorUp = () => {
-		const animateMove = !this.grabbingPiece;
-		this.gameState.isGrabbing = false;
+		if(this.gameState.selectedTile !== null) {
+			const piece = this.level.getPieceAt(this.gameState.selectedTile.userData.rank, this.gameState.selectedTile.userData.file);
 
-		if(this.gameState.selectedPiece !== null) {
-			const piece = this.gameState.selectedPiece;
+			const animateMove = !this.gameState.isGrabbing;
+			this.gameState.isGrabbing = false;
 
-			if(this.gameState.validMoves.includes(this.gameState.hoveredTile.name)) {
-				piece.userData.movedCount += 1;
+			if(this.gameState.hoveredTile !== null) {
+				if(this.gameState.validMoves.includes(this.gameState.hoveredTile.name)) {
+					const sourceRank = this.gameState.selectedTile.userData.rank;
+					const sourceFile = this.gameState.selectedTile.userData.file;
+					const targetRank = this.gameState.hoveredTile.userData.rank;
+					const targetFile = this.gameState.hoveredTile.userData.file;
+
+					const target = this.level.getPieceAt(targetRank, targetFile);
+
+					if(target !== '-') {
+						this.level.pieces.remove(target);
+					}
+
+					piece.userData.rank = targetRank;
+					piece.userData.file = targetFile;
+
+					this.level.board[sourceRank][sourceFile] = '-';
+					this.level.board[targetRank][targetFile] = piece;
+
+					gsap.to(piece.position, {
+						duration: animateMove ? 0.25 : 0,
+						x: piece.userData.rank,
+						z: piece.userData.file
+					});
+
+					this.gameState.selectedTile.reset();
+					this.gameState.selectedTile = null;
+					this.gameState.validMoves = [];
+				} else {
+					piece.position.set(piece.userData.rank, 0, piece.userData.file);
+				}
+
+				if(this.level.getPieceAt(this.gameState.hoveredTile.userData.rank, this.gameState.hoveredTile.userData.file)?.userData?.color === this.gameState.turn) {
+					document.body.style.cursor = 'grab';
+				} else {
+					document.body.style.cursor = 'default';
+				}
 			} else {
 				piece.position.set(piece.userData.rank, 0, piece.userData.file);
+				document.body.style.cursor = 'default';
 			}
 		}
 	};

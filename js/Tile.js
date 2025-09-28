@@ -4,7 +4,7 @@ class Tile extends Mesh {
     constructor(name, rank, file) {
         super(
             new BoxGeometry(1, 0.1, 1),
-            new MeshStandardMaterial({ color: rank % 2 === file % 2 ? 0XD2B48C : 0X664229 })
+            new MeshStandardMaterial({ color: rank % 2 === file % 2 ? 0Xebecd3 : 0X7a945a })
         );
 
         this.name = name;
@@ -16,16 +16,17 @@ class Tile extends Mesh {
         this.receiveShadow = true;
         this.material.transparent = true;
         this.material.opacity = 0;
-        this.material.emissive.set(0XFFFFFF);
         this.material.emissiveIntensity = 0;
         this.position.set(rank, -3, file);
     }
 
-    highlight() {
-        this.material.emissiveIntensity = 1;
+    mark() {
+        this.material.emissive.set(0XFFFFFF);
+        this.material.emissiveIntensity = 0.5;
     }
 
-    hover() {
+    select() {
+        this.material.emissive.set(0XFFFF33);
         this.material.emissiveIntensity = 0.5;
     }
 

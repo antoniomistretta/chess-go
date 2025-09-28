@@ -23,7 +23,7 @@ class Piece extends Mesh {
         model.traverse((object) => {
             if(object.isMesh) {
                 object.material = new MeshToonMaterial({
-                    color: this.userData.color === 'white' ? 0XE1BCA5 : 0X52301B,
+                    color: this.userData.color === 'white' ? 0Xf9f9f9 : 0X5b5957,
                     gradientMap: this.createGradientMap(),
                 });
 

@@ -78,7 +78,7 @@ class Level {
 	}
 
 	getValidMoves(piece) {
-		const validMoves = ['c4', 'd4'];
+		const validMoves = ['c4', 'd4', 'c7'];
 
 		return validMoves;
 	}
