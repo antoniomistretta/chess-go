@@ -15,7 +15,7 @@ class Piece extends Mesh {
         };
 
         if(this.userData.type === 'king') {
-			this.name = this.userData.color + ' king';
+			this.name = this.userData.color + 'king';
 		};
 
         const modelLoader = new ModelLoader();
