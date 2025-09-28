@@ -13,7 +13,8 @@ class Game {
 			isGrabbing: false,
 			turn: 'white',
 			moveHistory: [],
-			validMoves: []
+			validMoves: [],
+			finished: false
 		};
 
 		this.fStop = 10;
@@ -246,6 +247,15 @@ class Game {
 					});
 
 					this.gameState.turn = this.gameState.turn === 'white' ? 'black' : 'white';
+
+					this.gameState.finished = true;
+					for(const piece of this.level.pieces.children.filter(piece => piece.userData.color === this.gameState.turn)) {
+						if(this.level.getValidMoves(piece, this.gameState.turn).length > 0) {
+							this.gameState.finished = false;
+						};
+					}
+
+					console.log(this.gameState.finished);
 				} else {
 					piece.position.set(piece.userData.rank, 0, piece.userData.file);
 				}

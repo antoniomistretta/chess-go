@@ -19,9 +19,9 @@ const levels = {
 	'testing': {
 		board: [
 			['K','-','-','-','-','-','-','-'],
-			['Q','-','-','-','-','k','-','-'],
 			['-','-','-','-','-','-','-','-'],
-			['-','-','-','-','r','n','-','-']
+			['-','Q','n','-','-','k','-','-'],
+			['-','-','-','-','r','-','-','-']
 		]
 	},
 	'1': {
@@ -337,11 +337,13 @@ class Level {
 							break;
 						}
 
-						if(attackingPiece !== '-'
-							&& attackingPiece.userData.color !== color && ['rook', 'queen'].includes(attackingPiece.userData.type)
-						) {
-							invalidMoves.push(this.getNotationOf(targetRank, targetFile));
-							break;
+						if(attackingPiece !== '-' && attackingPiece !== piece) {
+							if(attackingPiece.userData.color === color) {
+								break;
+							} else if(attackingPiece.userData.color !== color && ['rook', 'queen'].includes(attackingPiece.userData.type)) {
+								invalidMoves.push(this.getNotationOf(targetRank, targetFile));
+								break;
+							}
 						}
 
 						move = traversalFunction(kingRank, kingFile, move[2]);
@@ -358,11 +360,13 @@ class Level {
 							break;
 						}
 
-						if(attackingPiece !== '-'
-							&& attackingPiece.userData.color !== color && ['bishop', 'queen'].includes(attackingPiece.userData.type)
-						) {
-							invalidMoves.push(this.getNotationOf(targetRank, targetFile));
-							break;
+						if(attackingPiece !== '-' && attackingPiece !== piece) {
+							if(attackingPiece.userData.color === color) {
+								break;
+							} else if(attackingPiece.userData.color !== color && ['bishop', 'queen'].includes(attackingPiece.userData.type)) {
+								invalidMoves.push(this.getNotationOf(targetRank, targetFile));
+								break;
+							}
 						}
 
 						move = traversalFunction(kingRank, kingFile, move[2]);
