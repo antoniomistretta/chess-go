@@ -22,7 +22,7 @@ class Tile extends Mesh {
 
     mark() {
         this.material.emissive.set(0XFFFFFF);
-        this.material.emissiveIntensity = 0.5;
+        this.material.emissiveIntensity = 0.7;
     }
 
     select() {

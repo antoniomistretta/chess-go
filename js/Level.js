@@ -77,11 +77,143 @@ class Level {
 		return { rank, file };
 	}
 
-	getValidMoves(piece) {
-		const validMoves = ['c4', 'd4', 'c7'];
+	getValidMoves(piece, color, lastMove) {
+		const validMoves = [];
+
+		const rank = piece.userData.rank;
+		const file =  piece.userData.file;		
+
+		switch(piece.userData.type) {
+			case 'pawn':
+				const direction = piece.userData.color === 'white' ? 1 : -1;
+
+				if(this.getPieceAt(rank + direction, file) === '-') {
+					validMoves.push(this.getNotationOf(rank + direction, file));
+					if(this.getPieceAt(rank + (direction * 2), file) === '-' && piece.userData.movedCount === 0) {
+						validMoves.push(this.getNotationOf(rank + (direction * 2), file));
+					}
+				}
+
+				for(const move of [
+					[rank + direction, file - 1],
+                    [rank + direction, file + 1]
+				]) {
+					const target = this.getPieceAt(move[0], move[1]);
+					
+					if(target === undefined) {
+						continue;
+					}
+
+					if((target?.userData?.color ?? color) !== color) {
+						validMoves.push(this.getNotationOf(move[0], move[1]));
+					}
+				}
+				break;
+
+			case 'knight':
+				for(const move of [
+					[rank + 1, file + 2],
+                    [rank + 2, file + 1],
+                    [rank + 1, file - 2],
+                    [rank + 2, file - 1],
+                    [rank - 1, file - 2],
+                    [rank - 2, file - 1],
+                    [rank - 1, file + 2],
+                    [rank - 2, file + 1]
+				]) {
+					const target = this.getPieceAt(move[0], move[1]);
+					
+					if(target === undefined) {
+						continue;
+					}
+
+					if((target?.userData?.color ?? color) !== color) {
+						validMoves.push(this.getNotationOf(move[0], move[1]));
+					}
+				}
+				break;
+
+			case 'king':
+				for(const move of [
+					[rank + 1, file],
+                    [rank, file + 1],
+                    [rank + 1, file + 1],
+                    [rank - 1, file],
+                    [rank, file - 1],
+                    [rank - 1, file - 1],
+                    [rank + 1, file - 1],
+                    [rank - 1, file + 1]
+				]) {
+					const target = this.getPieceAt(move[0], move[1]);
+					
+					if(target === undefined) {
+						continue;
+					}
+
+					if((target?.userData?.color ?? color) !== color) {
+						validMoves.push(this.getNotationOf(move[0], move[1]));
+					}
+				}
+				break;
+
+			case 'bishop':
+			case 'rook':
+			case 'queen':
+				for(const traversalFunction of this.getTraversalFunction(piece.userData.type, rank, file)) {
+					let move = traversalFunction(rank, file, 1);
+					let target = this.getPieceAt(move[0], move[1]);
+
+					while(target !== undefined) {
+						if(target !== '-') {
+							if((target?.userData?.color ?? color) !== color) {
+								validMoves.push(this.getNotationOf(move[0], move[1]));
+							}
+
+							break;
+						}
+
+						validMoves.push(this.getNotationOf(move[0], move[1]));
+
+						move = traversalFunction(rank, file, move[2]);
+						target = this.getPieceAt(move[0], move[1]);
+					}
+				}
+
+				break;
+		}
 
 		return validMoves;
 	}
+
+	getTraversalFunction(type, rank, file) {
+        switch(type) {
+			case 'bishop':
+                return [
+                    (rank, file, i) =>  [ rank + i, file + i, i + 1 ],
+                    (rank, file, i) =>  [ rank - i, file + i, i + 1 ],
+                    (rank, file, i) =>  [ rank + i, file - i, i + 1 ],
+                    (rank, file, i) =>  [ rank - i, file - i, i + 1 ]
+				];
+            case 'rook':
+                return [
+                    (rank, file, i) =>  [ rank + i, file, i + 1 ],
+                    (rank, file, i) =>  [ rank - i, file, i + 1 ],
+                    (rank, file, i) =>  [ rank, file + i, i + 1 ],
+                    (rank, file, i) =>  [ rank, file - i, i + 1 ]
+				];
+            case 'queen':
+                return [
+                    (rank, file, i) =>  [ rank + i, file, i + 1 ],
+                    (rank, file, i) =>  [ rank - i, file, i + 1 ],
+                    (rank, file, i) =>  [ rank, file + i, i + 1 ],
+                    (rank, file, i) =>  [ rank, file - i, i + 1 ],
+                    (rank, file, i) =>  [ rank + i, file + i, i + 1 ],
+                    (rank, file, i) =>  [ rank - i, file + i, i + 1 ],
+                    (rank, file, i) =>  [ rank + i, file - i, i + 1 ],
+                    (rank, file, i) =>  [ rank - i, file - i, i + 1 ]
+				];
+		}
+    }
 };
 
 export default Level;

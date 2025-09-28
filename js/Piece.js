@@ -7,19 +7,19 @@ class Piece extends Mesh {
         super();
 
         this.userData = {
-            'piece': this.getPieceTypeByIdentifier(identifier),
+            'type': this.getPieceTypeByIdentifier(identifier),
             'color': identifier === identifier.toLowerCase() ? 'white' : 'black',
             'movedCount': 0,
             'rank': rank,
             'file': file
         };
 
-        if(this.type === 'king') {
-			this.name = color + ' king';
-		}
+        if(this.userData.type === 'king') {
+			this.name = this.userData.color + ' king';
+		};
 
         const modelLoader = new ModelLoader();
-        const model = modelLoader.get(this.userData.piece).children[0];
+        const model = modelLoader.get(this.userData.type).children[0];
         model.traverse((object) => {
             if(object.isMesh) {
                 object.material = new MeshToonMaterial({
@@ -73,79 +73,6 @@ class Piece extends Mesh {
 
         return new CanvasTexture(canvas);
     };
-
-    // getAllMoves(rank, file) {
-    //     const moves = [];
-
-    //     switch(this.type) {
-    //         case 'pawn':
-    //             const direction = this.color === 'white' ? 1 : -1;
-
-    //             moves.push([rank + direction, file]);
-    //             if(!this.hasMoved) {
-    //                 moves.push([rank + (direction * 2), file]);
-    //             }
-
-    //             moves.push([rank + direction, file + 1]);
-    //             moves.push([rank + direction, file - 1]);
-
-    //             break;
-    //         case 'knight':
-    //             moves.push(
-    //                 [rank + 1, file + 2],
-    //                 [rank + 2, file + 1],
-    //                 [rank + 1, file - 2],
-    //                 [rank + 2, file - 1],
-    //                 [rank - 1, file - 2],
-    //                 [rank - 2, file - 1],
-    //                 [rank - 1, file + 2],
-    //                 [rank - 2, file + 1]
-    //             );
-    //             break;
-    //         case 'bishop':
-    //             moves.push(
-    //                 (rank, file, i) =>  [ rank + i, file + i, i + 1 ],
-    //                 (rank, file, i) =>  [ rank - i, file + i, i + 1 ],
-    //                 (rank, file, i) =>  [ rank + i, file - i, i + 1 ],
-    //                 (rank, file, i) =>  [ rank - i, file - i, i + 1 ]
-    //             );
-    //             break;
-    //         case 'rook':
-    //             moves.push(
-    //                 (rank, file, i) =>  [ rank + i, file, i + 1 ],
-    //                 (rank, file, i) =>  [ rank - i, file, i + 1 ],
-    //                 (rank, file, i) =>  [ rank, file + i, i + 1 ],
-    //                 (rank, file, i) =>  [ rank, file - i, i + 1 ]
-    //             );
-    //             break;
-    //         case 'queen':
-    //             moves.push(
-    //                 (rank, file, i) =>  [ rank + i, file, i + 1 ],
-    //                 (rank, file, i) =>  [ rank - i, file, i + 1 ],
-    //                 (rank, file, i) =>  [ rank, file + i, i + 1 ],
-    //                 (rank, file, i) =>  [ rank, file - i, i + 1 ],
-    //                 (rank, file, i) =>  [ rank + i, file + i, i + 1 ],
-    //                 (rank, file, i) =>  [ rank - i, file + i, i + 1 ],
-    //                 (rank, file, i) =>  [ rank + i, file - i, i + 1 ],
-    //                 (rank, file, i) =>  [ rank - i, file - i, i + 1 ]
-    //             );
-    //             break;
-    //         case 'king':
-    //             moves.push(
-    //                 [rank + 1, file],
-    //                 [rank, file + 1],
-    //                 [rank + 1, file + 1],
-    //                 [rank - 1, file],
-    //                 [rank, file - 1],
-    //                 [rank - 1, file - 1],
-    //                 [rank + 1, file - 1],
-    //                 [rank - 1, file + 1]
-    //             );
-    //             break;
-    //     }
-
-    //     return moves;
-    // }
 };
 
 export default Piece;

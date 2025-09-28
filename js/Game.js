@@ -12,6 +12,7 @@ class Game {
 			selectedTile: null,
 			isGrabbing: false,
 			turn: 'white',
+			moveHistory: [],
 			validMoves: []
 		};
 
@@ -162,6 +163,10 @@ class Game {
 				if(this.gameState.selectedTile !== null) {
 					this.gameState.selectedTile.reset();
 					this.gameState.selectedTile = null;
+					for(const move of this.gameState.validMoves) {
+						const tile = this.level.tiles.getObjectByName(move);
+						tile.reset();
+					};
 					this.gameState.validMoves = [];
 				}
 
@@ -169,15 +174,27 @@ class Game {
 				document.body.style.cursor = 'grabbing';
 				this.gameState.selectedTile = this.gameState.hoveredTile;
 				this.gameState.selectedTile.select();
-				this.gameState.validMoves = this.level.getValidMoves(this.level.getPieceAt(this.gameState.hoveredTile.userData.rank, this.gameState.hoveredTile.userData.file));
-			} else if(!this.gameState.validMoves.includes(this.gameState.hoveredTile.name)) {
+				this.gameState.validMoves = this.level.getValidMoves(this.level.getPieceAt(this.gameState.hoveredTile.userData.rank, this.gameState.hoveredTile.userData.file), this.gameState.turn, this.gameState.moveHistory[this.gameState.moveHistory.length - 1] ?? null);
+				for(const move of this.gameState.validMoves) {
+					const tile = this.level.tiles.getObjectByName(move);
+					tile.mark();
+				};
+			} else if(this.gameState.selectedTile !== null && !this.gameState.validMoves.includes(this.gameState.hoveredTile.name)) {
 				this.gameState.selectedTile.reset();
 				this.gameState.selectedTile = null;
+				for(const move of this.gameState.validMoves) {
+					const tile = this.level.tiles.getObjectByName(move);
+					tile.reset();
+				};
 				this.gameState.validMoves = [];
 			}
 		} else if(this.gameState.selectedTile !== null) {
 			this.gameState.selectedTile.reset();
 			this.gameState.selectedTile = null;
+			for(const move of this.gameState.validMoves) {
+				const tile = this.level.tiles.getObjectByName(move);
+				tile.reset();
+			};
 			this.gameState.validMoves = [];
 		}
 	};
@@ -204,6 +221,7 @@ class Game {
 
 					piece.userData.rank = targetRank;
 					piece.userData.file = targetFile;
+					piece.userData.movedCount += 1;
 
 					this.level.board[sourceRank][sourceFile] = '-';
 					this.level.board[targetRank][targetFile] = piece;
@@ -216,7 +234,18 @@ class Game {
 
 					this.gameState.selectedTile.reset();
 					this.gameState.selectedTile = null;
+					for(const move of this.gameState.validMoves) {
+						const tile = this.level.tiles.getObjectByName(move);
+						tile.reset();
+					};
 					this.gameState.validMoves = [];
+
+					this.gameState.moveHistory.push({
+						sourceTile: this.level.getNotationOf(sourceRank, sourceFile),
+						targetTile: this.level.getNotationOf(targetRank, targetFile)
+					});
+
+					this.gameState.turn = this.gameState.turn === 'white' ? 'black' : 'white';
 				} else {
 					piece.position.set(piece.userData.rank, 0, piece.userData.file);
 				}
