@@ -4,28 +4,24 @@ import Tile from '/js/Tile.js';
 import Piece from '/js/Piece.js';
 
 const levels = {
-	// 'classic': {
-	// 	board: [
-	// 		['R','N','B','Q','K','B','N','R'],
-	// 		['P','P','P','P','P','P','P','P'],
-	// 		['-','-','-','-','-','-','-','-'],
-	// 		['-','-','-','-','-','-','-','-'],
-	// 		['-','-','-','-','-','-','-','-'],
-	// 		['-','-','-','-','-','-','-','-'],
-	// 		['p','p','p','p','p','p','p','p'],
-	// 		['r','n','b','q','k','b','n','r']
-	// 	]
-	// },
 	'classic': {
 		board: [
+			['R','N','B','Q','K','B','N','R'],
+			['P','P','P','P','P','P','P','P'],
+			['-','-','-','-','-','-','-','-'],
+			['-','-','-','-','-','-','-','-'],
+			['-','-','-','-','-','-','-','-'],
+			['-','-','-','-','-','-','-','-'],
+			['p','p','p','p','p','p','p','p'],
+			['r','n','b','q','k','b','n','r']
+		]
+	},
+	'testing': {
+		board: [
 			['K','-','-','-','-','-','-','-'],
+			['Q','-','-','-','-','k','-','-'],
 			['-','-','-','-','-','-','-','-'],
-			['-','-','-','-','-','-','-','-'],
-			['Q','-','r','-','k','-','-','-'],
-			['-','-','-','-','-','-','-','-'],
-			['-','-','-','-','-','-','-','-'],
-			['-','-','-','-','-','-','-','-'],
-			['-','-','-','-','-','-','-','-']
+			['-','-','-','-','r','n','-','-']
 		]
 	},
 	'1': {
@@ -111,7 +107,7 @@ class Level {
 					[rank + direction, file + 1]
 				]) {
 					const target = this.getPieceAt(move[0], move[1]);
-					
+
 					if(target === undefined) {
 						continue;
 					}
@@ -134,7 +130,7 @@ class Level {
 					[rank - 2, file + 1]
 				]) {
 					const target = this.getPieceAt(move[0], move[1]);
-					
+
 					if(target === undefined) {
 						continue;
 					}
@@ -196,6 +192,8 @@ class Level {
 
 		const invalidMoves = [];
 		const king = this.pieces.getObjectByName(color + 'king');
+		const kingRank = king.userData.rank;
+		const kingFile = king.userData.file;
 
 		if(piece === king) {
 			for(const move of validMoves) {
@@ -249,7 +247,10 @@ class Level {
 
 					while(target !== undefined) {
 						if(target !== '-') {
-							if(target.userData.color === color) {
+							if(
+								target.userData.color === color
+								&& !(move[0] === kingRank && move[1] === kingFile)
+							) {
 								break;
 							} else if(target.userData.color !== color && ['rook', 'queen'].includes(this.getPieceAt(move[0], move[1]).userData.type)) {
 								invalidMoves.push(this.getNotationOf(targetRank, targetFile));
@@ -268,7 +269,10 @@ class Level {
 
 					while(target !== undefined) {
 						if(target !== '-') {
-							if(target.userData.color === color) {
+							if(
+								target.userData.color === color
+								&& !(move[0] === kingRank && move[1] === kingFile)
+							) {
 								break;
 							} else if(target.userData.color !== color && ['bishop', 'queen'].includes(this.getPieceAt(move[0], move[1]).userData.type)) {
 								invalidMoves.push(this.getNotationOf(targetRank, targetFile));
@@ -281,28 +285,92 @@ class Level {
 					}
 				}
 			}
-		} else {
+		} else if(king !== undefined) {
+			const sourceRank = rank;
+			const sourceFile = file;
+
 			for(const move of validMoves) {
-				const kingRank = king.userData.rank;
-				const kingFile = king.userData.file;
-				const sourceRank = rank;
-				const sourceFile = file;
-				const targetRank = move[0];
-				const targetFile = move[1];
+				const { rank: targetRank, file: targetFile } = this.getRankAndFileOfNotation(move);
 
-				// eminate from the king and figure out if i can move a piece either from a location or to a location
+				for(const attackingPiece of [
+					[kingRank + direction, kingFile - 1],
+					[kingRank + direction, kingFile + 1]
+				]) {
+					if(
+						this.getPieceAt(attackingPiece[0], attackingPiece[1])?.userData?.type === 'pawn'
+						&& this.getPieceAt(attackingPiece[0], attackingPiece[1])?.userData?.color !== color
+					) {
+						if(targetRank !== attackingPiece[0] || targetFile !== attackingPiece[1]) {
+							invalidMoves.push(this.getNotationOf(targetRank, targetFile));
+							break;
+						}
+					}
+				}
 
-				// for pinned pieces we need to determine any safe moves that they can make
+				for(const attackingPiece of [
+					[kingRank + 1, kingFile + 2],
+					[kingRank + 2, kingFile + 1],
+					[kingRank + 1, kingFile - 2],
+					[kingRank + 2, kingFile - 1],
+					[kingRank - 1, kingFile - 2],
+					[kingRank - 2, kingFile - 1],
+					[kingRank - 1, kingFile + 2],
+					[kingRank - 2, kingFile + 1]
+				]) {
+					if(
+						this.getPieceAt(attackingPiece[0], attackingPiece[1])?.userData?.type === 'knight'
+						&& this.getPieceAt(attackingPiece[0], attackingPiece[1])?.userData?.color !== color
+					) {
+						if(targetRank !== attackingPiece[0] || targetFile !== attackingPiece[1]) {
+							invalidMoves.push(this.getNotationOf(targetRank, targetFile));
+							break;
+						}
+					}
+				}
 
-				// for blocking pieces we need to detemrin which moves block an attacker
+				for(const traversalFunction of this.getTraversalFunction('rook')) {
+					let move = traversalFunction(kingRank, kingFile, 1);
+					let attackingPiece = this.getPieceAt(move[0], move[1]);
 
-				// lastly if the king is under threat then that threat MUST be delt with
-				// if there are multiple threats then it is game over AKA no valid moves for any pieces
+					while(attackingPiece !== undefined) {
+						if(move[0] === targetRank && move[1] === targetFile) {
+							break;
+						}
+
+						if(attackingPiece !== '-'
+							&& attackingPiece.userData.color !== color && ['rook', 'queen'].includes(attackingPiece.userData.type)
+						) {
+							invalidMoves.push(this.getNotationOf(targetRank, targetFile));
+							break;
+						}
+
+						move = traversalFunction(kingRank, kingFile, move[2]);
+						attackingPiece = this.getPieceAt(move[0], move[1]);
+					}
+				};
+
+				for(const traversalFunction of this.getTraversalFunction('bishop')) {
+					let move = traversalFunction(kingRank, kingFile, 1);
+					let attackingPiece = this.getPieceAt(move[0], move[1]);
+
+					while(attackingPiece !== undefined) {
+						if(move[0] === targetRank && move[1] === targetFile) {
+							break;
+						}
+
+						if(attackingPiece !== '-'
+							&& attackingPiece.userData.color !== color && ['bishop', 'queen'].includes(attackingPiece.userData.type)
+						) {
+							invalidMoves.push(this.getNotationOf(targetRank, targetFile));
+							break;
+						}
+
+						move = traversalFunction(kingRank, kingFile, move[2]);
+						attackingPiece = this.getPieceAt(move[0], move[1]);
+					}
+				};
 			}
 		}
-
-		console.log(validMoves);
-		console.log(invalidMoves);
 
 		return validMoves.filter(move => !invalidMoves.includes(move));
 	}

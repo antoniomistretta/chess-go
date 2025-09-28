@@ -38,7 +38,7 @@
 				<div class="w-full bg-black rounded-full h-2.5">
 					<div
 						class="bg-white h-2.5 rounded-full"
-						:class="`w-[$(percentModelsLoaded)]%`"
+						:class="'w-[' + percentLoaded * 100 + '%]'"
 					></div>
 				</div>
 			</div>

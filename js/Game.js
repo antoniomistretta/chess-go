@@ -153,7 +153,7 @@ class Game {
 			const intersection = new Vector3();
 			raycaster.ray.intersectPlane(planeZ, intersection);
 
-			this.level.getPieceAt(this.gameState.selectedTile.userData.rank, this.gameState.selectedTile.userData.file).position.set(intersection.x + (8 / 2) - 0.5, 0, intersection.z + (8 / 2) - 0.5);
+			this.level.getPieceAt(this.gameState.selectedTile.userData.rank, this.gameState.selectedTile.userData.file).position.set(intersection.x + (this.level.board.length / 2) - 0.5, 0, intersection.z + (this.level.board[0].length / 2) - 0.5);
 		}
 	};
 

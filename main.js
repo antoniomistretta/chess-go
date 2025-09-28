@@ -14,11 +14,12 @@ const app = createApp({
 			modelLoader.loadModels(
 				['pawn', 'rook', 'knight', 'bishop', 'queen', 'king'],
 				(_, itemsLoaded, itemsTotal) => {
-					percentLoaded.value = itemsLoaded / itemsTotal
+					percentLoaded.value = itemsLoaded / itemsTotal;
 				},
 				() => {
 					uiState.value = 'level';
-					game.loadLevel('classic');
+					game.loadLevel('testing');
+
 					// uiState.value = 'mainmenu';
 				}
 			);
