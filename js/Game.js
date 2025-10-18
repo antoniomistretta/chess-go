@@ -1,11 +1,9 @@
 import { AmbientLight, DirectionalLight, OrthographicCamera, Raycaster, Scene, Plane, Vector2, Vector3, WebGLRenderer } from 'three';
 
-import Cursor from '/js/Cursor.js';
 import Level from '/js/Level.js';
 
 class Game {
 	constructor() {
-		this.cursor = new Cursor();
 		this.scene = new Scene();
 		this.gameState = {
 			hoveredTile: null,
