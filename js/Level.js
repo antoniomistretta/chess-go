@@ -118,7 +118,7 @@ class Level {
 						continue;
 					}
 
-					if(target?.userData?.color ?? color !== color) {
+					if((target?.userData?.color ?? color) !== color) {
 						validMoves.push(this.getNotationOf(move[0], move[1]));
 					}
 				}
