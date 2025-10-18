@@ -6,7 +6,6 @@ const { createApp, onMounted, ref  } = Vue;
 const app = createApp({
 	setup() {
 		const game = new Game();
-		const uiState = ref('loading');
 		const percentLoaded = ref(0);
 
 		onMounted(() => {
@@ -14,33 +13,25 @@ const app = createApp({
 			modelLoader.loadModels(
 				['pawn', 'rook', 'knight', 'bishop', 'queen', 'king'],
 				(_, itemsLoaded, itemsTotal) => {
-					percentLoaded.value = itemsLoaded / itemsTotal;
+					percentLoaded.value = (itemsLoaded / itemsTotal) * 100;
 				},
 				() => {
-					uiState.value = 'level';
-					game.loadLevel('testing');
-
-					// uiState.value = 'mainmenu';
+					game.loadLevel('classic');
 				}
 			);
 		});
 
 		const handleUIAction = (action, data = {}) => {
 			switch(action) {
-				case 'showLevels':
-					uiState.value = 'levels';
-					break;
-				case 'loadLevel':
-					uiState.value = 'level';
-					game.loadLevel(data.level);
+				case 'reset':
+					game.loadLevel(game.level.name);
 					break;
 			}
-		}
+		};
 
 		return {
 			handleUIAction,
-			percentLoaded,
-			uiState
+			percentLoaded
 		};
 	}
 });

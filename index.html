@@ -5,7 +5,6 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 		<title>Chess-Go</title>
-
 		<style>[v-cloak] {display: none }</style>
 
 		<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,51 +28,17 @@
 		<div
 			v-cloak
 			id="interface"
-			class="absolute w-full h-full p-4"
+			class="absolute w-full h-full"
 		>
 			<div
-				v-if="uiState === 'loading'"
-				class="h-full flex items-center"
-			>
-				<div class="w-full bg-black rounded-full h-2.5">
-					<div
-						class="bg-white h-2.5 rounded-full"
-						:class="'w-[' + percentLoaded * 100 + '%]'"
-					></div>
-				</div>
-			</div>
-
-			<div
-				v-if="uiState === 'mainmenu'"
-				class="h-full max-w-sm mx-auto flex flex-col gap-4 justify-center items-center"
-			>
-				<img
-					src="png/logo.png"
-					alt="logo"
-					class="mb-8"
-				>
-
-				<button
-					v-on:click="handleUIAction('loadLevel', { level: 'classic' })"
-					class="cursor-pointer transition text-white bg-yellow-900 hover:bg-yellow-700 py-4 px-2 rounded-lg w-full text-4xl uppercase font-[Jua] border-4 border-amber-300"
-				>Versus</button>
-
-				<button
-					v-on:click="handleUIAction('showLevels')"
-					class="cursor-pointer transition text-white bg-yellow-900 hover:bg-yellow-700 py-4 px-2 rounded-lg w-full text-4xl uppercase font-[Jua] border-4 border-amber-300"
-				>Levels</button>
-			</div>
-
-			<div
-				v-if="uiState === 'levels'"
-				class="h-full max-w-sm mx-auto grid grid-cols-3 gap-4"
+				v-if="percentLoaded === 100"
+				class="p-4"
 			>
 				<button
-					v-for="level in [1,2,3,4,5]"
-					v-text="level"
-					v-on:click="handleUIAction('loadLevel', { level: level })"
-					class="text-white bg-yellow-900 py-4 px-2 rounded-lg w-full text-4xl uppercase font-[Jua]"
-				></button>
+					v-on:click="handleUIAction('reset')"
+					type="button"
+					class="cursor-pointer text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
+				>Restart</button>
 			</div>
 		</div>
 

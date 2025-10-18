@@ -15,16 +15,14 @@ const levels = {
 			['p','p','p','p','p','p','p','p'],
 			['r','n','b','q','k','b','n','r']
 		]
-	},
-	'testing': {
+	}, 'testing': {
 		board: [
 			['K','-','-','-','-','-','-','-'],
 			['-','-','-','-','-','-','-','-'],
 			['-','Q','n','-','-','k','-','-'],
 			['-','-','-','-','r','-','-','-']
 		]
-	},
-	'1': {
+	}, '1': {
 		board: [
 			['K','X'],
 			['-','X'],
@@ -32,12 +30,20 @@ const levels = {
 			['-','-'],
 			['-','r']
 		]
+	}, '2': {
+		board: [
+			['-','-','K','-','-','-','-','-'],
+			['-','-','-','-','-','-','-','-'],
+			['-','-','-','-','-','-','-','-'],
+			['-','-','-','-','-','-','q','r']
+		]
 	}
 };
 
 class Level {
 	constructor(name) {
-		this.board = levels[name].board.reverse();
+		this.board = structuredClone(levels[name].board).reverse();
+		this.name = name;
 		this.length = this.board.length;
 		this.width = this.board[0].length;
 
@@ -192,10 +198,11 @@ class Level {
 
 		const invalidMoves = [];
 		const king = this.pieces.getObjectByName(color + 'king');
-		const kingRank = king.userData.rank;
-		const kingFile = king.userData.file;
 
 		if(piece === king) {
+			const kingRank = king.userData.rank;
+			const kingFile = king.userData.file;
+
 			for(const move of validMoves) {
 				const { rank: targetRank, file: targetFile } = this.getRankAndFileOfNotation(move);
 
@@ -286,8 +293,8 @@ class Level {
 				}
 			}
 		} else if(king !== undefined) {
-			const sourceRank = rank;
-			const sourceFile = file;
+			const kingRank = king.userData.rank;
+			const kingFile = king.userData.file;
 
 			for(const move of validMoves) {
 				const { rank: targetRank, file: targetFile } = this.getRankAndFileOfNotation(move);
@@ -407,6 +414,30 @@ class Level {
 					(rank, file, i) =>  [ rank - i, file - i, i + 1 ]
 				];
 		}
+	}
+
+	movePiece(piece, move, animateMove) {
+		const sourceRank = piece.userData.rank;
+		const sourceFile = piece.userData.file;
+		const { rank: targetRank, file: targetFile } = this.getRankAndFileOfNotation(move);
+		const target = this.getPieceAt(targetRank, targetFile);
+
+		if(target !== '-') {
+			this.pieces.remove(target);
+		}
+
+		piece.userData.rank = targetRank;
+		piece.userData.file = targetFile;
+		piece.userData.movedCount += 1;
+
+		this.board[sourceRank][sourceFile] = '-';
+		this.board[targetRank][targetFile] = piece;
+
+		gsap.to(piece.position, {
+			duration: animateMove ? 0.25 : 0,
+			x: piece.userData.rank,
+			z: piece.userData.file
+		});
 	}
 };
 
